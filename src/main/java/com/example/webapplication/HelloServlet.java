@@ -2,14 +2,12 @@ package com.example.webapplication;
 
 import java.io.*;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
 @WebServlet(name = "helloServlet", value = "/hello-servlet")
 public class HelloServlet extends HttpServlet {
-    Connection connection = H2JDBConnection.getConnection();
+    Connection connection = H2DBConnection.getConnection();
 
     private String sqlQuery = "select * from items";
 

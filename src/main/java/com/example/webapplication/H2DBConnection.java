@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class H2JDBConnection {
+public class H2DBConnection {
 
     private static String jdbcURL = "jdbc:h2:tcp://localhost/~/test";
     private static String jdbcUsername = "Fawad";
