@@ -27,7 +27,7 @@ public class Dboperations {
             System.out.println(insertqueryStatement);
             insertqueryStatement.executeUpdate();
         } catch (SQLException e) {
-            printSQLException(e);
+           e.printStackTrace();
         }
     }
 
@@ -50,14 +50,14 @@ public class Dboperations {
                 user = new User(id, name, email, country);
             }
         } catch (SQLException e) {
-            printSQLException(e);
+
         }
         return user;
     }
 */
     public List<User> selectAllUsers() {
 
-        // using try-with-resources to avoid closing resources (boiler plate code)
+        // using try-with-resources to avoid closing resources
         List<User> userList = new ArrayList<>();
         // Step 1: Establishing a Connection
         try (Connection connection = H2DBConnection.getConnection();
@@ -71,23 +71,31 @@ public class Dboperations {
             // Step 4: Process the ResultSet object.
             while (rs.next()) {
                 User user = new User();
-                int id = rs.getInt("id");
-                String name = rs.getString("name");
-                String email = rs.getString("email");
+              int  id = rs.getInt("id");
+              String  name = rs.getString("name");
+               String email = rs.getString("email");
+
+                // set user data
+                user.setId(id);
+                user.setName(name);
+                user.setEmail(email);
+
+                // add user to list
+                userList.add(user);
 
 
-
-                userList.add(user));
+                System.out.println(id + " " + name + " " + email);
             }
         } catch (SQLException e) {
-            printSQLException(e);
+            e.printStackTrace();
         }
-        return users;
+        return userList;
     }
 
     public boolean deleteUser(int id) throws SQLException {
         boolean rowDeleted;
-        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(DELETE_USERS_SQL);) {
+        try (Connection connection = H2DBConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(DELETE_USERS_SQL);) {
             statement.setInt(1, id);
             rowDeleted = statement.executeUpdate() > 0;
         }
@@ -96,33 +104,18 @@ public class Dboperations {
 
     public boolean updateUser(User user) throws SQLException {
         boolean rowUpdated;
-        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(UPDATE_USERS_SQL);) {
+        try (Connection connection = H2DBConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(UPDATE_USERS_SQL);) {
             statement.setString(1, user.getName());
             statement.setString(2, user.getEmail());
-            statement.setString(3, user.getCountry());
-            statement.setInt(4, user.getId());
 
             rowUpdated = statement.executeUpdate() > 0;
         }
         return rowUpdated;
     }
 
-    private void printSQLException(SQLException ex) {
-        for (Throwable e : ex) {
-            if (e instanceof SQLException) {
-                e.printStackTrace(System.err);
-                System.err.println("SQLState: " + ((SQLException) e).getSQLState());
-                System.err.println("Error Code: " + ((SQLException) e).getErrorCode());
-                System.err.println("Message: " + e.getMessage());
-                Throwable t = ex.getCause();
-                while (t != null) {
-                    System.out.println("Cause: " + t);
-                    t = t.getCause();
-                }
-            }
-        }
-    }
+
 }
 
 
-}
+
