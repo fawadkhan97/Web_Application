@@ -15,7 +15,7 @@ public class UserServlet extends HttpServlet {
     private Dboperations dboperations;
 
 
-    public void init() throws ServletException {
+    public void init()  {
         dboperations = new Dboperations();
     }
 
@@ -29,16 +29,26 @@ public class UserServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         String action = request.getServletPath();
-        System.out.println("action is "+action);
+        System.out.println("action is " + action);
 
 
         try {
             switch (action) {
+                case "/showNewForm":
+                    showNewForm(request, response);
+                    break;
+                case "/insert":
+                    insertUser(request, response);
+                    break;
+                case "/edit ":
+                    showEditForm(request, response);
+                    break;
+                case "/update":
+                    updateUser(request, response);
+                    break;
                 case "/delete ":
                     deleteUser(request, response);
                     break;
-                case "/insert":
-                    insertUser(request,response);
                 default:
                     displayUser(request, response);
                     break;
@@ -61,7 +71,7 @@ public class UserServlet extends HttpServlet {
 
         } catch (NullPointerException e) {
             System.out.println("no data recieved");
-            e.getMessage();
+            e.printStackTrace();
         }
 
         // Setting the attribute of the request object
@@ -72,11 +82,21 @@ public class UserServlet extends HttpServlet {
         // Creating a RequestDispatcher object to dispatch
         // the request to another resource
         RequestDispatcher requestDispatcher =
-                request.getRequestDispatcher("user.jsp");
+                request.getRequestDispatcher("displayUser.jsp");
 
         requestDispatcher.forward(request, response);
 
 
+    }
+
+
+    private void showNewForm(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        System.out.println("inside show new form");
+
+        RequestDispatcher dispatcher = request.getRequestDispatcher("createUserForm.jsp");
+        dispatcher.forward(request, response);
     }
 
 
@@ -88,13 +108,42 @@ public class UserServlet extends HttpServlet {
         newUser.setName(name);
         newUser.setEmail(email);
         dboperations.insertUser(newUser);
-        response.sendRedirect("/");
+        response.sendRedirect("showNewForm");
     }
 
 
+    private void showEditForm(HttpServletRequest request, HttpServletResponse response)
+            throws SQLException, ServletException, IOException {
+        System.out.println("inside edit form");
+
+        int id = Integer.parseInt(request.getParameter("id"));
+        User getexistingUser = dboperations.selectUser(id);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("updateUserForm.jsp");
+        request.setAttribute("existinguser", getexistingUser);
+        dispatcher.forward(request, response);
+    }
+
+
+    private void updateUser(HttpServletRequest request, HttpServletResponse response)
+            throws SQLException, IOException {
+
+        System.out.println("inside update user");
+        int id = Integer.parseInt(request.getParameter("id"));
+        String name = request.getParameter("name");
+        String email = request.getParameter("email");
+
+        User updateuser= new User();
+
+        updateuser.setId(id);
+        updateuser.setName(name);
+        updateuser.setEmail(email);
+
+        dboperations.updateUser(updateuser);
+        response.sendRedirect("user-servlet");
+    }
 
     private void deleteUser(HttpServletRequest request, HttpServletResponse response) throws
-            SQLException, IOException, ServletException {
+            SQLException, IOException {
 
         int id = Integer.parseInt(request.getParameter("id"));
         dboperations.deleteUser(id);

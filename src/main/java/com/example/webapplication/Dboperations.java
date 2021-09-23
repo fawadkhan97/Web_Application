@@ -11,8 +11,8 @@ import java.util.List;
 public class Dboperations {
 
     private static final String INSERT_USERS_SQL = "INSERT INTO users" + "  (name, email) VALUES " +
-            " (?, ?, ?);";
-    private static final String SELECT_USER_BY_ID = "select id,name,email,country from users where id =?";
+            " (?, ?);";
+    private static final String SELECT_USER_BY_ID = "select id,name,email from users where id =?";
     private static final String SELECT_ALL_USERS = "select * from users";
     private static final String DELETE_USERS_SQL = "delete from users where id = ?;";
     private static final String UPDATE_USERS_SQL = "update users set name = ?,email= ? where id = ?;";
@@ -27,86 +27,101 @@ public class Dboperations {
             System.out.println(insertqueryStatement);
             insertqueryStatement.executeUpdate();
         } catch (SQLException e) {
-           e.printStackTrace();
+            e.printStackTrace();
         }
     }
 
-  /*  public User selectUser(int id) {
+    public User selectUser(int id) {
         User user = null;
         // Step 1: Establishing a Connection
-        try (Connection connection = getConnection();
+        try (Connection connection = H2DBConnection.getConnection();
              // Step 2:Create a statement using connection object
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_ID);) {
-            preparedStatement.setInt(1, id);
-            System.out.println(preparedStatement);
+             PreparedStatement getUserByIdStatement = connection.prepareStatement(SELECT_USER_BY_ID);) {
+            getUserByIdStatement.setInt(1, id);
+            System.out.println(getUserByIdStatement);
             // Step 3: Execute the query or update query
-            ResultSet rs = preparedStatement.executeQuery();
+            ResultSet rs = getUserByIdStatement.executeQuery();
 
+            System.out.println("before rs = "+id);
             // Step 4: Process the ResultSet object.
+
+
+
             while (rs.next()) {
+
                 String name = rs.getString("name");
                 String email = rs.getString("email");
-                String country = rs.getString("country");
-                user = new User(id, name, email, country);
+
+                user =new User();
+
+                user.setId(id);
+                user.setName(name);
+                user.setEmail(email);
+
+                System.out.println("id is "+user.getId());
             }
         } catch (SQLException e) {
 
         }
         return user;
     }
-*/
+
     public List<User> displayUser() throws SQLException {
 
         // using try-with-resources to avoid closing resources
         List<User> userList = new ArrayList<>();
         // Step 1: Establishing a Connection
-            Connection connection = H2DBConnection.getConnection();
+        Connection connection = H2DBConnection.getConnection();
 
-             // Step 2:Create a statement using connection object
-             PreparedStatement getallusersStatement = connection.prepareStatement(SELECT_ALL_USERS);
-            System.out.println(getallusersStatement);
-            // Step 3: Execute the query or update query
-            ResultSet rs = getallusersStatement.executeQuery();
+        // Step 2:Create a statement using connection object
+        PreparedStatement getallusersStatement = connection.prepareStatement(SELECT_ALL_USERS);
+        System.out.println(getallusersStatement);
+        // Step 3: Execute the query or update query
+        ResultSet rs = getallusersStatement.executeQuery();
 
-            // Step 4: Process the ResultSet object.
-            while (rs.next()) {
-                User user = new User();
-              int  id = rs.getInt("id");
-              String  name = rs.getString("name");
-               String email = rs.getString("email");
+        // Step 4: Process the ResultSet object.
+        while (rs.next()) {
+            User user = new User();
+            int id = rs.getInt("id");
+            String name = rs.getString("name");
+            String email = rs.getString("email");
 
-                // set user data
-                user.setId(id);
-                user.setName(name);
-                user.setEmail(email);
+            // set user data
+            user.setId(id);
+            user.setName(name);
+            user.setEmail(email);
 
-                // add user to list
-                userList.add(user);
-                System.out.println(id + " " + name + " " + email);
-            }
+            // add user to list
+            userList.add(user);
+            System.out.println(id + " " + name + " " + email);
+        }
 
         return userList;
     }
 
+
     public boolean deleteUser(int id) throws SQLException {
         boolean rowDeleted;
         System.out.println("here");
-            Connection connection = H2DBConnection.getConnection();
-             PreparedStatement deleteUserstatement = connection.prepareStatement(DELETE_USERS_SQL);
-            deleteUserstatement.setInt(1, id);
-            rowDeleted = deleteUserstatement.executeUpdate() > 0;
+        Connection connection = H2DBConnection.getConnection();
+        PreparedStatement deleteUserstatement = connection.prepareStatement(DELETE_USERS_SQL);
+        deleteUserstatement.setInt(1, id);
+        rowDeleted = deleteUserstatement.executeUpdate() > 0;
 
         return rowDeleted;
     }
 
     public boolean updateUser(User user) throws SQLException {
+        System.out.println("in db operations");
         boolean rowUpdated;
         try (Connection connection = H2DBConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(UPDATE_USERS_SQL);) {
-            statement.setString(1, user.getName());
-            statement.setString(2, user.getEmail());
+             PreparedStatement updateUserstatement = connection.prepareStatement(UPDATE_USERS_SQL);) {
+            updateUserstatement.setString(1, user.getName());
+            updateUserstatement.setString(2, user.getEmail());
+            updateUserstatement.setInt(3, user.getId());
+            rowUpdated = updateUserstatement.executeUpdate() > 0;
 
-            rowUpdated = statement.executeUpdate() > 0;
+            System.out.println(updateUserstatement);
         }
         return rowUpdated;
     }

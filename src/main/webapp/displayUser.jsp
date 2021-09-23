@@ -23,10 +23,10 @@
 
 <h1> List of user </h1>
 
-<a href="#"  class="btn btn-primary m-3 " role="button" >Add new user</a>
+<a  href="${pageContext.request.contextPath}/showNewForm"  class="m btn btn-primary m-3 " role="button" >Add new user</a>
 
-<table >
-    <thead>
+<table class="table " >
+    <thead class="thead-dark">
     <tr>
         <th><b>ID</b></th>
         <th><b>Name</b></th>
@@ -52,6 +52,7 @@
         </td>
         <td>
             <a href="${pageContext.request.contextPath}/delete ?id=<%=user.getId()%>"  class="btn btn-danger " role="button" >Delete</a>
+            <a href="${pageContext.request.contextPath}/edit ?id=<%=user.getId()%>"  class="btn btn-secondary"  role="button" >Edit</a>
         </td>
 
     </tr>
