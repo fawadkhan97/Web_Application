@@ -11,8 +11,7 @@
 <h1  ><%= "List of users" %>
 </h1>
 <br/>
-
 <a href="hello-servlet">Hello Servlet</a>
-<a href=" <%=request.getContextPath()%>/user-servlet">User list</a>
+<a href=" ${pageContext.request.contextPath}/user-servlet">User list</a>
 </body>
 </html>

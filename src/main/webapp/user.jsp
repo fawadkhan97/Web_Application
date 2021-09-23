@@ -51,7 +51,7 @@
         <td><%=user.getEmail()%>
         </td>
         <td>
-            <a href="delete ?id=<%=user.getId()%>"  class="btn btn-danger " role="button" >Delete</a>
+            <a href="${pageContext.request.contextPath}/delete ?id=<%=user.getId()%>"  class="btn btn-danger " role="button" >Delete</a>
         </td>
 
     </tr>
