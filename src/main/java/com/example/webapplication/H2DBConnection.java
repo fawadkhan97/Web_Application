@@ -6,14 +6,14 @@ import java.sql.SQLException;
 
 public class H2DBConnection {
 
-    private static String jdbcURL = "jdbc:h2:tcp://localhost/~/test";
-    private static String jdbcUsername = "Fawad";
-    private static String jdbcPassword = "123";
+    private static String jdbcURL = "jdbc:mysql://localhost/webapplication";
+    private static String jdbcUsername = "root";
+    private static String jdbcPassword = "12345";
 
     public static Connection getConnection() {
         Connection connection = null;
         try {
-            Class.forName("org.h2.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
         } catch (SQLException | ClassNotFoundException e) {
             // TODO Auto-generated catch block

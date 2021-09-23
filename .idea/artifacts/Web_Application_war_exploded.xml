@@ -18,6 +18,20 @@
           <element id="library" level="project" name="Maven: com.h2database:h2:1.4.195" />
           <element id="library" level="project" name="Maven: ojdbc:ojdbc:14" />
           <element id="library" level="project" name="Maven: com.h2database:h2-mvstore:1.4.190" />
+          <element id="library" level="project" name="Maven: jstl:jstl:1.2" />
+          <element id="library" level="project" name="Maven: mysql:mysql-connector-java:8.0.25" />
+          <element id="library" level="project" name="Maven: com.google.protobuf:protobuf-java:3.11.4" />
+          <element id="library" level="project" name="Maven: org.webjars.npm:mysql:2.18.1" />
+          <element id="library" level="project" name="Maven: org.webjars.npm:bignumber.js:9.0.0" />
+          <element id="library" level="project" name="Maven: org.webjars.npm:readable-stream:2.3.7" />
+          <element id="library" level="project" name="Maven: org.webjars.npm:core-util-is:1.0.3" />
+          <element id="library" level="project" name="Maven: org.webjars.npm:util-deprecate:1.0.2" />
+          <element id="library" level="project" name="Maven: org.webjars.npm:inherits:2.0.4" />
+          <element id="library" level="project" name="Maven: org.webjars.npm:string_decoder:1.1.1" />
+          <element id="library" level="project" name="Maven: org.webjars.npm:process-nextick-args:2.0.1" />
+          <element id="library" level="project" name="Maven: org.webjars.npm:isarray:1.0.0" />
+          <element id="library" level="project" name="Maven: org.webjars.npm:safe-buffer:5.1.2" />
+          <element id="library" level="project" name="Maven: org.webjars.npm:sqlstring:2.3.1" />
         </element>
       </element>
       <element id="directory" name="META-INF">

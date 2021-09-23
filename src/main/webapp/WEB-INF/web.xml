@@ -5,14 +5,6 @@
          version="4.0">
 
 
-    <servlet>
-        <servlet-name>Dbservlet</servlet-name>
-        <servlet-class>com.example.webapplication.Dbservlet</servlet-class>
-    </servlet>
 
-    <servlet-mapping>
-        <servlet-name>Dbservlet</servlet-name>
-        <url-pattern>/DB-servlet</url-pattern>
-    </servlet-mapping>
 
 </web-app>

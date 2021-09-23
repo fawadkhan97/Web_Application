@@ -10,12 +10,12 @@ import java.util.List;
 
 public class Dboperations {
 
-    private static final String INSERT_USERS_SQL = "INSERT INTO users" + "  (name, email, country) VALUES " +
+    private static final String INSERT_USERS_SQL = "INSERT INTO users" + "  (name, email) VALUES " +
             " (?, ?, ?);";
     private static final String SELECT_USER_BY_ID = "select id,name,email,country from users where id =?";
     private static final String SELECT_ALL_USERS = "select * from users";
     private static final String DELETE_USERS_SQL = "delete from users where id = ?;";
-    private static final String UPDATE_USERS_SQL = "update users set name = ?,email= ?, country =? where id = ?;";
+    private static final String UPDATE_USERS_SQL = "update users set name = ?,email= ? where id = ?;";
 
     public void insertUser(User user) throws SQLException {
         System.out.println(INSERT_USERS_SQL);
@@ -55,18 +55,18 @@ public class Dboperations {
         return user;
     }
 */
-    public List<User> selectAllUsers() {
+    public List<User> displayUser() throws SQLException {
 
         // using try-with-resources to avoid closing resources
         List<User> userList = new ArrayList<>();
         // Step 1: Establishing a Connection
-        try (Connection connection = H2DBConnection.getConnection();
+            Connection connection = H2DBConnection.getConnection();
 
              // Step 2:Create a statement using connection object
-             PreparedStatement getalluseresStatement = connection.prepareStatement(SELECT_ALL_USERS);) {
-            System.out.println(getalluseresStatement);
+             PreparedStatement getallusersStatement = connection.prepareStatement(SELECT_ALL_USERS);
+            System.out.println(getallusersStatement);
             // Step 3: Execute the query or update query
-            ResultSet rs = getalluseresStatement.executeQuery();
+            ResultSet rs = getallusersStatement.executeQuery();
 
             // Step 4: Process the ResultSet object.
             while (rs.next()) {
@@ -82,23 +82,20 @@ public class Dboperations {
 
                 // add user to list
                 userList.add(user);
-
-
                 System.out.println(id + " " + name + " " + email);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
         return userList;
     }
 
     public boolean deleteUser(int id) throws SQLException {
         boolean rowDeleted;
-        try (Connection connection = H2DBConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(DELETE_USERS_SQL);) {
-            statement.setInt(1, id);
-            rowDeleted = statement.executeUpdate() > 0;
-        }
+        System.out.println("here");
+            Connection connection = H2DBConnection.getConnection();
+             PreparedStatement deleteUserstatement = connection.prepareStatement(DELETE_USERS_SQL);
+            deleteUserstatement.setInt(1, id);
+            rowDeleted = deleteUserstatement.executeUpdate() > 0;
+
         return rowDeleted;
     }
 
