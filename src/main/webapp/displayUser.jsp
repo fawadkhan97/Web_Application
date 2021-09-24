@@ -20,12 +20,13 @@
 
 
 
-
-<h1> List of user </h1>
-
+<h1 class="mt-5" style="text-align: center"> Showing userList </h1>
+<div class="m-3" style="text-align: center">
 <a  href="${pageContext.request.contextPath}/showNewForm"  class="m btn btn-primary m-3 " role="button" >Add new user</a>
+</div>
 
-<table class="table " >
+<div class="mt-5 mx-auto" style="width: 70%; text-align: center">
+<table class="table" >
     <thead class="thead-dark">
     <tr>
         <th><b>ID</b></th>
@@ -58,6 +59,8 @@
     </tr>
     <%}%>
 </table>
+
+</div>
 <hr/>
 
 </body>

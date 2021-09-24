@@ -9,17 +9,46 @@
 </head>
 <body>
 
-<h1>Add New User</h1>
-<form action="insert" method="post">
-    <table>
-        <tr><td>Name:</td><td><input type="text" name="name"/></td></tr>
-        <tr><td>Email:</td><td><input type="email" name="email"/></td></tr>
-        <tr><td colspan="2"><input type="submit" /></td></tr>
-    </table>
-</form>
 
+<h1 style="text-align: center" class="mt-5">Add New User</h1>
+
+
+<div style="text-align: center">
+    <a class="btn btn-info" href="user-servlet">Home</a>
+</div>
+
+
+<div class="form-group mx-auto" style="width: 60%">
+    <form action="insert" method="post">
+
+        <label for="Username">Name: </label>
+        <input class="form-control mb-3" type="text"  required name="name" id="userName"
+        >
+
+
+        <label for="Useremail">Email: </label>
+        <input class="form-control mb-5" type="email"  required name="email" id="Useremail">
+
+
+        <input class="btn btn-info"  onclick="onClick()" type="submit"/>
+
+    </form>
+</div>
 <br/>
-<a href="user-servlet">Show users</a>
+
+<script>
+
+    function onClick(){
+
+        let name = document.getElementById("userName");
+
+        if(name.length > 1)
+        alert("Your form has been submited");
+
+    }
+
+</script>
+
 
 </body>
 </html>

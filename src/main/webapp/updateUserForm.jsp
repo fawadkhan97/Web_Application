@@ -10,18 +10,37 @@
 </head>
 <body>
 
-<h1>Add New User</h1>
-<form action="update" method="post">
-    <table>
-        <tr><td> Id: </td> <td> <input type="number" readonly="true"  name="id" value="<S:out value='${existinguser.id}' />"> </td> </tr>
-        <tr><td>Name:</td><td><input type="text" name="name" value="<S:out value='${existinguser.name}'/>"></td></tr>
-        <tr><td>Email:</td><td><input type="email" name="email"  value="<S:out value='${existinguser.email}'/>"></td></tr>
-        <tr><td colspan="2"><input type="submit" /></td></tr>
-    </table>
-</form>
+<br>
+<br>
+<br>
+<br>
+<h1 style="text-align: center"  >Updating ${existinguser.name} info....</h1>
 
+<br>
+<div class="form-group mx-auto" style="width: 60%">
+    <form action="update" method="post">
+        <label for="Userid">ID: </label>
+        <input class="form-control mb-3" type="number" readonly="true" name="id" id="Userid"
+               value="<S:out value='${existinguser.id}' />">
+
+
+        <label for="Username">Name: </label>
+        <input class="form-control mb-3" type="text" name="name" id="userName"
+               value="<S:out value='${existinguser.name}'/>">
+
+
+        <label for="Useremail">Email: </label>
+        <input class="form-control mb-5" type="email" name="email" id="Useremail" value="<S:out value='${existinguser.email}'/>">
+
+
+        <input class="btn btn-info" type="submit"/>
+
+    </form>
+</div>
 <br/>
-<a href="user-servlet">Show Users</a>
 
+<div style="text-align: center">
+<a  class="btn btn-info" href="user-servlet">Home</a>
+</div>
 </body>
 </html>
